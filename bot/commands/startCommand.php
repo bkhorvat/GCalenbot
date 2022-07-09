@@ -18,7 +18,7 @@ if($user)
       [
         [
           'text' => 'Web app',
-          'web_app' => ['url' => "https://www.testmyproject.pl/test.php"]
+          'web_app' => ['url' => "https://www.testmyproject.pl/bot/webapp/index.php"]
         ]
       ],
       [

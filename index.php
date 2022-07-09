@@ -54,6 +54,7 @@ if(str_starts_with($update['inline_query']['query'], '/event ') && endsWith($upd
   $text = str_replace('+', '', $text);
   require_once 'bot/googleCalendar/event/addEventCommand.php';
 }
+/*
 if($update['inline_query'])
 {
   $text = $update['inline_query']['query'];
@@ -72,5 +73,6 @@ if($update['inline_query'])
       ];
     $result =  json_encode($resultArr);
   sendRequest('answerInlineQuery', ['inline_query_id' => $inline_query_id, 'results' => $result, 'switch_pm_text' => 'trulala', 'switch_pm_parameter' => 'https://t.me/gcalenbot']);
-*/
+
 }
+*/
