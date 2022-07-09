@@ -53,15 +53,20 @@
 
 //Start, end time
     let hours = date.getHours();
+    let endHours = hours+1;
+
     if(hours < 10){
       hours = '0'+hours;
+    }
+    if(endHours < 10){
+      endHours = '0'+endHours;
     }
     let minutes = date.getMinutes();
     if(minutes < 10){
       minutes = '0'+minutes;
     }
     const startTime = hours+':'+minutes;
-    const endTime = hours+1+':'+minutes;
+    const endTime = endHours+':'+minutes;
 
     document.querySelector('#startDate').value = dateToday;
     document.querySelector('#startTime').value = startTime;

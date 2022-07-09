@@ -5,6 +5,8 @@ $webApp = $update['message']['web_app_data']['button_text'];
 try {
   if($webApp == 'Web app')
   {
+    sendRequest('sendMessage', ['chat_id' => $chat_id, 'text' => $update['message']['web_app_data']['data']]);
+
     require_once $_SERVER['DOCUMENT_ROOT'].'/bot/databaseconnect.php';
     $stmt = $conn->prepare("SELECT timezone FROM Users WHERE chat_id=?");
     $stmt->execute([$chat_id]);
