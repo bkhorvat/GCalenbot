@@ -1,0 +1,5 @@
+<?php
+$Arctic =
+[
+  'Arctic/Longyearbyen'
+];
