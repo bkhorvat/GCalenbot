@@ -17,7 +17,7 @@ if($user)
       ],
       [
         [
-          'text' => 'Web app',
+          'text' => 'Add event',
           'web_app' => ['url' => "https://www.testmyproject.pl/bot/webapp/index.php"]
         ]
       ],

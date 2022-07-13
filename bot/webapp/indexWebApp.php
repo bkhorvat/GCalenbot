@@ -3,7 +3,7 @@
 $webApp = $update['message']['web_app_data']['button_text'];
 
 try {
-  if($webApp == 'Web app')
+  if($webApp == 'Add event')
   {
     require_once $_SERVER['DOCUMENT_ROOT'].'/bot/databaseconnect.php';
     $stmt = $conn->prepare("SELECT timezone FROM Users WHERE chat_id=?");

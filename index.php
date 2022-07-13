@@ -42,7 +42,7 @@ if($text == '/up')
 if($update){
   sendRequest('sendMessage', ['chat_id' => $chat_id, 'text' => file_get_contents('php://input')]);
 }
-*/
+
 function endsWith($haystack, $needle) {
     $length = strlen($needle);
     return $length > 0 ? substr($haystack, -$length) === $needle : true;
@@ -54,25 +54,45 @@ if(str_starts_with($update['inline_query']['query'], '/event ') && endsWith($upd
   $text = str_replace('+', '', $text);
   require_once 'bot/googleCalendar/event/addEventCommand.php';
 }
-/*
+*/
+if($text == '/start 123'){
+  $inlineKeyboard =  [
+    'keyboard' =>
+    [
+      [
+        ['text' => 'Back to chat']
+      ],
+      [
+        [
+          'text' => 'Add event',
+          'web_app' => ['url' => "https://www.testmyproject.pl/bot/webapp/index.php"]
+        ]
+      ],
+      [
+        ['text' => 'Menu']
+      ],
+
+    ]
+  ];
+  $jsoninlineKeyboard = json_encode($inlineKeyboard);
+  sendRequest('sendMessage', ['chat_id' => $chat_id, 'text' => 'Use menu for add event.', 'reply_markup' => $jsoninlineKeyboard]);
+}
+
 if($update['inline_query'])
 {
   $text = $update['inline_query']['query'];
   $inline_query_id = $update['inline_query']['id'];
-  $resultArr[0] = [
-    'type' => 'article',
-    'id' => '0',
-    'title' => 'Trulala',
-    'message_text' => 'text trulala'
-    ];
-    $resultArr[1] = [
-      'type' => 'article',
-      'id' => '1',
-      'title' => 'Trulalaww',
-      'message_text' => 'text trulala'
-      ];
-    $result =  json_encode($resultArr);
-  sendRequest('answerInlineQuery', ['inline_query_id' => $inline_query_id, 'results' => $result, 'switch_pm_text' => 'trulala', 'switch_pm_parameter' => 'https://t.me/gcalenbot']);
+  $result =  [
+    [
+      "type" => "article",
+      "id" => "1",
+      "title" => "Trulalaasdlma",
+      "input_message_content" => [
+        "message_text" => "temkaml ajskanld"
+      ]
+    ]
+  ];
+  $result2 = [];
+  sendRequest('answerInlineQuery', ['inline_query_id' => $inline_query_id, 'results' => $result2, 'switch_pm_text' => 'Edd event', 'switch_pm_parameter' => '123']);
 
 }
-*/
