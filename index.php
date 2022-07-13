@@ -56,12 +56,9 @@ if(str_starts_with($update['inline_query']['query'], '/event ') && endsWith($upd
 }
 */
 if($text == '/start 123'){
-  $inlineKeyboard =  [
+  $keyboard =  [
     'keyboard' =>
     [
-      [
-        ['text' => 'Back to chat']
-      ],
       [
         [
           'text' => 'Add event',
@@ -71,17 +68,34 @@ if($text == '/start 123'){
       [
         ['text' => 'Menu']
       ],
-
+      [
+        ['text' => 'Back to chat']
+      ],
     ]
   ];
-  $jsoninlineKeyboard = json_encode($inlineKeyboard);
-  sendRequest('sendMessage', ['chat_id' => $chat_id, 'text' => 'Use menu for add event.', 'reply_markup' => $jsoninlineKeyboard]);
+  sendRequest('sendMessage', ['chat_id' => $chat_id, 'text' => 'Use menu for add event.', 'reply_markup' => json_encode($keyboard)]);
+}
+if($text == 'Back to chat'){
+  $inlineKeyboardd = [
+    'inline_keyboard' =>
+    [
+      [
+        [
+          'text' => 'Back to chat',
+          'switch_inline_query' => ''
+        ]
+      ]
+    ]
+  ];
+  sendRequest('sendMessage', ['chat_id' => $chat_id, 'text' => 'You can back to chat. Click!.', 'reply_markup' => json_encode($inlineKeyboardd)]);
 }
 
 if($update['inline_query'])
 {
   $text = $update['inline_query']['query'];
   $inline_query_id = $update['inline_query']['id'];
+  $updateAll = json_encode($update['inline_query']);
+  sendRequest('sendMessage', ['chat_id' => $chat_id, 'text' => $updateAll]);
   $result =  [
     [
       "type" => "article",
