@@ -30,6 +30,7 @@ if($user)
   $jsonLoginBtn = json_encode($loginBtn);
 
   sendRequest('sendMessage', ['chat_id' => $chat_id, 'text' => 'Menu are open.', 'reply_markup' => $jsonLoginBtn]);
+  sendRequest('sendMessage', ['chat_id' => $chat_id, 'text' => 'Set up a time zone into settings before using!']);
 }else
 {
   $loginBtn =  [
