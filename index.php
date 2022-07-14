@@ -55,25 +55,40 @@ if(str_starts_with($update['inline_query']['query'], '/event ') && endsWith($upd
   require_once 'bot/googleCalendar/event/addEventCommand.php';
 }
 */
-if($text == '/start 123'){
-  $keyboard =  [
-    'keyboard' =>
-    [
+if($user)
+{
+  if($text == '/start 123'){
+    $keyboard =  [
+      'keyboard' =>
       [
         [
-          'text' => 'Add event',
-          'web_app' => ['url' => "https://www.testmyproject.pl/bot/webapp/index.php"]
-        ]
-      ],
+          [
+            'text' => 'Add event',
+            'web_app' => ['url' => "https://www.testmyproject.pl/bot/webapp/index.php"]
+          ]
+        ],
+        [
+          ['text' => 'Menu']
+        ],
+        [
+          ['text' => 'Back to chat']
+        ],
+      ]
+    ];
+    sendRequest('sendMessage', ['chat_id' => $chat_id, 'text' => 'Use menu for add event.', 'reply_markup' => json_encode($keyboard)]);
+  }
+}else{
+  $loginBtn =  [
+    'inline_keyboard' =>
+    [
       [
-        ['text' => 'Menu']
-      ],
-      [
-        ['text' => 'Back to chat']
-      ],
+        ['text' => 'Login', 'url' => "https://www.testmyproject.pl/bot/oAuth2.0/index.php?chat_id=$chat_id"]
+      ]
     ]
   ];
-  sendRequest('sendMessage', ['chat_id' => $chat_id, 'text' => 'Use menu for add event.', 'reply_markup' => json_encode($keyboard)]);
+  $jsonLoginBtn = json_encode($loginBtn);
+  sendRequest('sendMessage', ['chat_id' => $chat_id, 'text' => 'Hello! Welcome to CalendarHelper! This bot is interface for Google Calendar. Please, login via your Google account for start. Click login.', 'reply_markup' => $jsonLoginBtn]);
+  sendRequest('sendMessage', ['chat_id' => $chat_id, 'text' => 'After login click /start one more.']);
 }
 if($text == 'Back to chat'){
   $inlineKeyboardd = [
