@@ -22,6 +22,12 @@ if($user)
         ]
       ],
       [
+        [
+          'text' => 'Statistics',
+          'web_app' => ['url' => "https://www.testmyproject.pl/bot/webapp/statistics.php"]
+        ]
+      ],
+      [
         ['text' => 'Logout']
       ],
 
