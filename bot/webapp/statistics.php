@@ -1,3 +1,41 @@
+ <?php
+require $_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/bot/databaseconnect.php';
+
+$chat_id = $_GET['chat_id'];
+$stmt = $conn->prepare("SELECT access_token FROM Users WHERE chat_id=?");
+$stmt->execute([$chat_id]);
+$user = $stmt->fetch();
+$access_token = $user['access_token'];
+
+require_once $_SERVER['DOCUMENT_ROOT'].'/bot/googleCalendar/newClient.php';
+
+$service = new Google_Service_Calendar($client);
+
+// Print the next 10 events on the user's calendar.
+try{
+
+    $calendarId = 'primary';
+    $optParams = array(
+        'orderBy' => 'startTime',
+        'singleEvents' => true,
+        'timeMin' => date('Y-m-d\T00:00:00+02:00'),
+        'timeMax' => date('Y-m-d\T23:59:59+02:00'),
+    );
+    $results = $service->events->listEvents($calendarId, $optParams);
+    $events = $results->getItems();
+
+    if (empty($events)) {
+        print "No upcoming events found.\n";
+    } else {
+        echo json_encode($events);
+    }
+}
+catch(Exception $e) {
+    // TODO(developer) - handle error appropriately
+    echo 'Message: ' .$e->getMessage();
+}
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>

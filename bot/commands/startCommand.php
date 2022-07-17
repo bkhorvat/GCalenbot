@@ -24,7 +24,7 @@ if($user)
       [
         [
           'text' => 'Statistics',
-          'web_app' => ['url' => "https://www.testmyproject.pl/bot/webapp/statistics.php"]
+          'web_app' => ['url' => "https://www.testmyproject.pl/bot/webapp/statistics.php?chat_id=$chat_id"]
         ]
       ],
       [
