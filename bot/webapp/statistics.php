@@ -25,11 +25,33 @@ try{
     $results = $service->events->listEvents($calendarId, $optParams);
     $events = $results->getItems();
 
-    if (empty($events)) {
-        print "No upcoming events found.\n";
-    } else {
-        echo json_encode($events);
+
+    function getHourDiff($event){
+      if($event['start']['date'] && $event['end']['date']){
+        $hourdiff = round((strtotime($event['end']['date']) - strtotime($event['start']['date']))/3600, 1);
+      }elseif($event['start']['dateTime'] && $event['end']['dateTime']){
+        $hourdiff = round((strtotime($event['end']['dateTime']) - strtotime($event['start']['dateTime']))/3600, 1);
+      }elseif($event['start']['dateTime'] && $event['end']['date']){
+        $hourdiff = round((strtotime($event['end']['date']) - strtotime($event['start']['dateTime']))/3600, 1);
+      }elseif($event['start']['date'] && $event['end']['dateTime']){
+        $hourdiff = round((strtotime($event['end']['dateTime']) - strtotime($event['start']['date']))/3600, 1);
+      }
+      return $hourdiff;
     }
+
+    foreach ($events as $event) {
+      if($jsonEvents[$event['summary']])
+      {
+        $jsonEvents[$event['summary']] += getHourDiff($event);
+      }else{
+        $jsonEvents[$event['summary']] = getHourDiff($event);
+      }
+    }
+    $dataJson = [['Task', 'Hours per Day']];
+    foreach ($jsonEvents as $key => $value) {
+      array_push($dataJson, ["$key", $value]);
+    }
+    $dataJson = json_encode($dataJson);
 }
 catch(Exception $e) {
     // TODO(developer) - handle error appropriately
@@ -55,14 +77,7 @@ catch(Exception $e) {
 
       function drawChart() {
 
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Work',     11],
-          ['Eat',      2],
-          ['Commute',  2],
-          ['Watch TV', 2],
-          ['Sleep',    7]
-        ]);
+        var data = google.visualization.arrayToDataTable(<?php echo $dataJson ?>);
 
         var options = {
           title: 'My Daily Activities'
