@@ -37,7 +37,6 @@ if($text == '/up')
   $up = file_get_contents('php://input');
   sendRequest('sendMessage', ['chat_id' => $chat_id, 'text' => $a]);
 }
-
 /*
 if($update){
   sendRequest('sendMessage', ['chat_id' => $chat_id, 'text' => file_get_contents('php://input')]);
